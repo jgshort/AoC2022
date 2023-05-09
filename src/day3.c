@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include <stdlib.h>
 #include <assert.h>
 #include <stddef.h>
@@ -97,11 +99,11 @@ In how many assignment pairs does one range fully contain the other?
 
 */
 
-static void aoc_day3_p0_worker(const char * line, ssize_t read, void * state) {
+static void aoc_day3_p0_worker(const char ** line, ssize_t read, void * state) {
   if(read <= 1) { return; }
   day_3_state * S = (day_3_state *)state;
 
-  const char * s = line;
+  const char * s = *line;
   pair P = { 0 };
   parse_pair(&s, &P);
   const range L = P.left, R = P.right;
@@ -138,11 +140,11 @@ So, in this example, the number of overlapping assignment pairs is 4.
 In how many assignment pairs do the ranges overlap?
 */
 
-static void aoc_day3_p1_worker(const char * line, ssize_t read, void * state) {
+static void aoc_day3_p1_worker(const char ** line, ssize_t read, void * state) {
   if(read <= 1) { return; }
 
   day_3_state * S = (day_3_state *)state;
-  const char * s = line;
+  const char * s = *line;
 
   pair P = { 0 };
   parse_pair(&s, &P);
@@ -181,7 +183,8 @@ static void parse_range(const char ** str, range * R) {
         consume(&s);
       }
       char temp_buffer[max_num_len] = { 0 };
-      memmove(temp_buffer, first, s - first - 1);
+      assert(s - first - 1 > 0);
+      memmove(temp_buffer, first, (size_t)(s - first - 1));
       uint32_t * dest = (prev == ',' || newline) ? &(R->max) : &(R->min);
       first = s;
       parse_int(temp_buffer, dest);

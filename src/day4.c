@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include <stddef.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -227,13 +229,14 @@ static void consume_crates(day_4_state * S) {
   } while(*(S->str) && **(S->str) != '\0');
 }
 
-static void aoc_day4_p0_worker(const char * line, ssize_t read, void * state) {
+static void aoc_day4_p0_worker(const char ** line, ssize_t read, void * state) {
   day_4_state * S = (day_4_state *)state;
-  S->str = &line;
+  S->str = line;
+  const char * L = *line;
   if(read > 1) {
-    if(*line == 'm') {
+    if(*L == 'm') {
       consume_instruction(S);
-    } else if(strncmp(line, " 1 ", 3) != 0) {
+    } else if(strncmp(L, " 1 ", 3) != 0) {
       /* parse crates */
       consume_crates(S);
       columns_len = current > columns_len ? current : columns_len;

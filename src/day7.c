@@ -27,12 +27,13 @@ typedef struct day7_state {
 
 static void free_state(day7_state * S);
 
-static void build_map(const char * line, ssize_t read, void * state) {
+static void build_map(const char ** line, ssize_t read, void * state) {
   day7_state * S = (day7_state *)state;
   (void)state;
   if(read <= 0 || !line) { return; }
+  const char * L = *line;
   size_t len = 0;
-  line_cp(line, &len, &S->map, &S->map_len);
+  line_cp(L, &len, &S->map, &S->map_len);
   if(len > 0) {
     if(len > 1 && S->cols <= 0) { S->cols = len - 1; }
     S->rows++;

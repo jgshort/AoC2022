@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include <stddef.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -164,7 +166,7 @@ static void parse_name(const char **s, char **name) {
     if(len > 0) {
       char * temp = calloc((size_t)len + 1, sizeof * temp);
       if(!temp) { abort(); }
-      memcpy(temp, start, len);
+      memcpy(temp, start, (size_t)len);
       temp[len] = '\0';
       *name = temp;
     }
@@ -260,19 +262,20 @@ static void parse_lines(const char * line) {
   } while(*s != '\0');
 }
 
-static void aoc_day6_p0_text_reader(const char * line, ssize_t read, void * state) {
+static void aoc_day6_p0_text_reader(const char ** line, ssize_t read, void * state) {
   (void)state;
   static size_t sz = 0;
 
+  const char * L = *line;
   if(read <= 1) { return; }
-  if(!line) { return; }
+  if(!line || !L) { return; }
 
-  size_t line_len = strnlen(line, max_line_len);
+  size_t line_len = strnlen(L, max_line_len);
   if(line_len > 0) {
     char * temp = realloc(text, (sz + line_len) + 1 * sizeof * temp);
     if(!temp) { abort(); }
     text = temp;
-    memmove(text + sz, line, line_len);
+    memmove(text + sz, L, line_len);
     sz += line_len;
     text[sz] = '\0';
   }

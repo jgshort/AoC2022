@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>
@@ -79,21 +81,22 @@ typedef struct {
 
 int score_item(const char item);
 
-void aoc_day2_p0_worker(const char * line, ssize_t read, void * state) {
+void aoc_day2_p0_worker(const char ** line, ssize_t read, void * state) {
   if(read <= 1) { return; }
 
+  const char * L = *line;
   day_2_state * S = (day_2_state *)state;
 
-  const size_t line_len = strnlen(line, max_line_len);
+  const size_t line_len = strnlen(L, max_line_len);
   if(line_len < 1) { return; }
 
   const size_t mid_point = line_len / 2;
-  const char * const end = line + read;
+  const char * const end = L + read;
 
-  const char * lhs = line;
+  const char * lhs = L;
 
   const char * match = NULL;
-  const char * mid_start = line + mid_point;
+  const char * mid_start = L + mid_point;
   do {
     const char * rhs = mid_start;
     do {
@@ -170,11 +173,12 @@ typedef struct {
   char * groups[3];
 } day_2_p2_state;
 
-void aoc_day2_p1_worker(const char * line, ssize_t read, void * state) {
+void aoc_day2_p1_worker(const char ** line, ssize_t read, void * state) {
   if(read <= 1) { return; }
 
+  const char * L = *line;
   day_2_p2_state * S = (day_2_p2_state *)state;
-  const size_t line_len = strnlen(line, max_line_len);
+  const size_t line_len = strnlen(L, max_line_len);
 
   const char * match = NULL;
   S->groups[S->index] = calloc(line_len, sizeof S->groups[0]);

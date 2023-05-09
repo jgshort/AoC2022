@@ -60,14 +60,14 @@ What would your total score be if everything goes exactly according to your
 strategy guide?
 */
 
-static void aoc_day1_p0_worker(const char * line, ssize_t read, void * state) {
+static void aoc_day1_p0_worker(const char ** line, ssize_t read, void * state) {
   if(read <= 1) { return; }
 
-
+  const char * L = *line;
   day_1_state * S = (day_1_state *)state;
-  const char * const end = line + read;
+  const char * const end = L + read;
   const char my_shape = *(end - 2);
-  const char their_shape = *line;
+  const char their_shape = *L;
   /* my shapes are X..Z, worth 1..3 points, respectively */
   const int shape_score = (my_shape - 'Z') + 3;
   /* their shapes are A..C, worth 1..3 points, respectively */
@@ -118,13 +118,14 @@ Following the Elf's instructions for the second column, what would your total
 score be if everything goes exactly according to your strategy guide?
 */
 
-static void aoc_day1_p1_worker(const char * line, ssize_t read, void * state) {
+static void aoc_day1_p1_worker(const char ** line, ssize_t read, void * state) {
   if(read <= 1) { return; }
 
+  const char * L = *line;
   day_1_state * S = (day_1_state  *)state;
-  const char * const end = line + read;
+  const char * const end = L + read;
   const char my_shape = *(end - 2);
-  const char their_shape = *line;
+  const char their_shape = *L;
 
   /* their shapes are A..C, worth 1..3 points, respectively */
   const int opponent_score = (their_shape - 'C') + 3;

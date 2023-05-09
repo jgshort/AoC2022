@@ -33,7 +33,7 @@ typedef struct munkee {
 } munkee;
 
 static void read_list(const char **s, munkee * M);
-static void read_script(const char * line, ssize_t read, void * state);
+static void read_script(const char ** line, ssize_t read, void * state);
 static void read_starting(const char ** s, munkee * M);
 static op parse_op(const char ** s);
 static int64_t parse_expr(const char ** s);
@@ -492,11 +492,12 @@ int aoc_day10_p1(int argc, char **argv) {
   return result;
 }
 
-static void read_script(const char * line, ssize_t read, void * state) {
+static void read_script(const char ** line, ssize_t read, void * state) {
   (void)state;
-  if(read <= 0 || !line) { return; }
+  const char * L = *line;
+  if(read <= 0 || !L) { return; }
   size_t len = 0;
-  line_cp(line, &len, &input, &input_len);
+  line_cp(L, &len, &input, &input_len);
 }
 
 static void read_starting(const char ** s, munkee * M) {

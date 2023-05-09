@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include <stdlib.h>
 #include <errno.h>
 #include <stdio.h>
@@ -55,7 +57,8 @@ int read_lines(int argc, char **argv, void * state, aoc_fn fn) {
   ssize_t read = 0;
   while((read = getline(&line, &len, fp)) != -1) {
     if(errno) { goto err2; }
-    fn(line, read, state);
+    const char * L = line;
+    fn(&L, read, state);
   }
 
   free(line), line = NULL;

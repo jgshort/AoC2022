@@ -111,11 +111,14 @@ static void check_cycle(day9_state * S) {
   }
 }
 
-void read_instructions(const char * line, ssize_t read, void * state) {
-  if(!line || read <= 0 || *line == '\0') { return; }
+void read_instructions(const char ** line, ssize_t read, void * state) {
+  if(!line || read <= 0 ) { return; }
+
+  const char * L = *line;
+  if(!L || *L == '\0') { return; }
   day9_state * S = (day9_state *)state;
 
-  const char * s = line, * l = line;
+  const char * s = L, * l = L;
   if(*s == 'n' || *s == 'a') { s += 5; }
 
   if(*l == 'a') {
@@ -293,11 +296,14 @@ static void put_pixel(day9_state * S) {
   if(pixel == 39) { fprintf(stdout, "\n"); }
 }
 
-static void draw_crt(const char * line, ssize_t read, void * state) {
-  if(!line || read <= 0 || *line == '\0') { return; }
+static void draw_crt(const char ** line, ssize_t read, void * state) {
+  if(!line || read <= 0) { return; }
   day9_state * S = (day9_state *)state;
+  (void)S;
 
-  const char * s = line, * l = line;
+  const char * L = *line;
+  if(!L || *L == '\0') { return; }
+  const char * s = L, * l = L;
   if(*s == 'n' || *s == 'a') { s += 5; }
   switch(*l) {
     case 'n':

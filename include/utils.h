@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-typedef void(*aoc_fn)(const char * line, ssize_t read, void * state);
+typedef void(*aoc_fn)(const char ** line, ssize_t read, void * state);
 
 extern const size_t max_line_len;
 

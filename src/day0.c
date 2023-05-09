@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
@@ -54,7 +56,8 @@ typedef struct {
   unsigned long max_calories;
 } day_0_state;
 
-void aoc_day0_p0_worker(const char * line, ssize_t read, void * state) {
+void aoc_day0_p0_worker(const char ** line, ssize_t read, void * state) {
+  const char * L = *line;
   day_0_state * S = (day_0_state *)state;
   if(read <= 1) {
     if(S->total_calories > S->max_calories) {
@@ -66,7 +69,7 @@ void aoc_day0_p0_worker(const char * line, ssize_t read, void * state) {
     return;
   }
 
-  unsigned long item_calories = parse_arg(line, false);
+  unsigned long item_calories = parse_arg(L, false);
   S->total_calories += item_calories;
 }
 

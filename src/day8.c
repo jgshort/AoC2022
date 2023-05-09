@@ -51,11 +51,12 @@ typedef struct {
 static size_t visits_len = 0;
 static vertex visits[65536] = { 0 };
 
-static void read_instructions(const char * line, ssize_t read, void * state) {
+static void read_instructions(const char ** line, ssize_t read, void * state) {
   if(read <= 0 || !line) { return; }
   day8_state * S = (day8_state *)state;
   size_t len = 0;
-  line_cp(line, &len, &S->input, &S->input_len);
+  const char * L = *line;
+  line_cp(L, &len, &S->input, &S->input_len);
   S->rules_len++;
 }
 
@@ -457,5 +458,4 @@ Won't compile; won't work.
 *   }
 * }
 */
-
 

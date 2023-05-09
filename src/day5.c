@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include <stddef.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -10,12 +12,13 @@
 #include "../include/utils.h"
 #include "../include/day4.h"
 
-static void aoc_day5_p0_worker(const char * line, ssize_t read, void * state) {
+static void aoc_day5_p0_worker(const char ** line, ssize_t read, void * state) {
   (void)state;
   if(read <= 1) { return; }
-  size_t len = strnlen(line, 65536);
-  const char * s = line;
-  const char * end = line + len;
+  const char * L = *line;
+  size_t len = strnlen(L, 65536);
+  const char * s = L;
+  const char * end = L + len;
   while(s < end) {
     char T[5] = { s[0], s[1], s[2], s[3], '\0' };
     if(T[0] == T[1]) { goto next; }
@@ -30,7 +33,7 @@ next:
     s++;
   }
 
-  fprintf(stdout, "Characters before SoP Marker: %zu\n", (s - line) + 4);
+  fprintf(stdout, "Characters before SoP Marker: %zu\n", (s - L) + 4);
 }
 
 int aoc_day5_p0(int argc, char **argv) {
@@ -38,12 +41,13 @@ int aoc_day5_p0(int argc, char **argv) {
   return result;
 }
 
-static void aoc_day5_p1_worker(const char * line, ssize_t read, void * state) {
+static void aoc_day5_p1_worker(const char ** line, ssize_t read, void * state) {
   (void)state;
   if(read <= 1) { return; }
-  size_t len = strnlen(line, 65536);
-  const char * s = line;
-  const char * end = line + len;
+  const char * L = *line;
+  size_t len = strnlen(L, 65536);
+  const char * s = L;
+  const char * end = L + len;
   while(s < end) {
     char T[15] = { 0 };
     memcpy(T, s, sizeof T);
@@ -60,7 +64,7 @@ next:
     s++;
   }
 
-  fprintf(stdout, "Characters before Message Marker: %zu\n", (s - line) + 14);
+  fprintf(stdout, "Characters before Message Marker: %zu\n", (s - L) + 14);
 }
 
 int aoc_day5_p1(int argc, char **argv) {

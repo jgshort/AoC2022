@@ -39,11 +39,11 @@ int main(int argc, char **argv) {
   if(argc < 3) { goto err0; }
 
   const unsigned long day = parse_arg(argv[1], exit_on_fail);
-  if(day < 0 || day > 30) { goto err1; }
+  if(day > 30) { goto err1; }
   if(day > available_days - 1) { goto err2; }
 
   const unsigned long puzzle = parse_arg(argv[2], exit_on_fail);
-  if(puzzle < 0 || puzzle > 1) { goto err3; }
+  if(puzzle > 1) { goto err3; }
 
   if(!aoc_days[day][puzzle]) { goto err4; }
   return aoc_days[day][puzzle](argc, argv);
